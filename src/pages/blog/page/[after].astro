@@ -1,0 +1,47 @@
+---
+import type { GetPostsQuery } from "../../../graphql/generated";
+import query from "../../../get-posts.graphql?raw";
+import { graphqlFetch } from "../../../lib/graphqlFetch";
+
+// Pull the "after" cursor from the URL query parameter
+const {after} = Astro.params;
+
+const first = 5;
+
+// Fetch posts from WPGraphQL
+const data = await graphqlFetch<GetPostsQuery>(query, {
+  first,
+  after,
+});
+
+const posts = data.posts?.nodes ?? [];
+const nextCursor = data.posts?.pageInfo.endCursor;
+const hasNext = data.posts?.pageInfo.hasNextPage ?? false;
+
+// Build the "Next Page" link (if there’s more)
+const nextPageUrl = hasNext ? `/blog/page/${nextCursor}` : null;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Paginated Posts</title>
+  </head>
+  <body>
+    <h1>Posts</h1>
+
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>
+          <a href={post.uri}>{post.title ?? "Untitled"}</a>
+        </li>
+      ))}
+    </ul>
+
+    {nextPageUrl && (
+      <a href={nextPageUrl}>
+        <button>Next Page</button>
+      </a>
+    )}
+  </body>
+</html>

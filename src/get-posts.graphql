@@ -1,0 +1,14 @@
+query GetPosts($first: Int! = 5, $after: String) {
+  posts(first: $first, after: $after) {
+    nodes {
+      id
+      title
+      uri
+      excerpt
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
