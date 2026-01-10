@@ -3,11 +3,8 @@ import type { GetPostsQuery } from "../../graphql/generated";
 import query from "../../get-posts.graphql?raw";
 import { graphqlFetch } from "../../lib/graphqlFetch";
 
-// Pull the "after" cursor from the URL query parameter
-
 const first = 5;
 
-// Fetch posts from WPGraphQL
 const data = await graphqlFetch<GetPostsQuery>(query, {
   first,
 });
@@ -16,7 +13,6 @@ const posts = data.posts?.nodes ?? [];
 const nextCursor = data.posts?.pageInfo.endCursor;
 const hasNext = data.posts?.pageInfo.hasNextPage ?? false;
 
-// Build the "Next Page" link (if there’s more)
 const nextPageUrl = hasNext ? `/blog/page/${nextCursor}` : null;
 ---
 
@@ -30,7 +26,7 @@ const nextPageUrl = hasNext ? `/blog/page/${nextCursor}` : null;
 
     <ul>
       {posts.map((post) => (
-        <li key={post.id}>
+        <li>
           <a href={post.uri}>{post.title ?? "Untitled"}</a>
         </li>
       ))}
