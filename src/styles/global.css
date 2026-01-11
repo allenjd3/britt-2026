@@ -1,1 +1,11 @@
 @import 'tailwindcss';
+
+@theme {
+    --color-tan-light: oklch(0.9025 0.0111 54.48);
+    --color-tan-bright: oklch(0.9557 0.0111 54.48);
+    --color-tan-dark: oklch(0.8133 0.0111 54.48);
+}
+
+.wrapper {
+    @apply max-w-7xl mx-auto;
+}
