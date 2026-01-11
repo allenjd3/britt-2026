@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import Header from '../components/Header'
 const title = Astro.props
 ---
 <!DOCTYPE html>
@@ -10,74 +11,7 @@ const title = Astro.props
     <title>{title}</title>
 </head>
 <body>
-    <header class="flex justify-between h-16 items-center px-4 border-b border-gray-200">
-        <h2 class="font-serif text-2xl">Britt Lee Allen</h2>
-
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex text-gray-700 gap-8 items-center">
-            <a href="" class="hover:text-black">Featured</a>
-            <a href="" class="hover:text-black">Works</a>
-            <a href="" class="hover:text-black">Excerpts</a>
-            <a href="" class="hover:text-black">About</a>
-            <a href="" class="bg-black px-4 py-2 rounded-full text-white">Newsletter</a>
-        </nav>
-
-        <!-- Mobile Menu Button -->
-        <button id="menuBtn" class="md:hidden p-2">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-        </button>
-    </header>
-
-    <!-- Mobile Flyout Menu -->
-    <div id="mobileMenu" class="fixed inset-0 bg-black/30 bg-opacity-50 z-50 hidden">
-        <div id="menuPanel" class="fixed right-0 top-0 h-full w-64 bg-white shadow-lg transform translate-x-full transition-transform duration-300">
-            <div class="flex justify-end p-4">
-                <button id="closeBtn" class="p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <nav class="flex flex-col px-4 gap-4">
-                <a href="" class="text-gray-700 hover:text-black py-2 border-b border-gray-100">Featured</a>
-                <a href="" class="text-gray-700 hover:text-black py-2 border-b border-gray-100">Works</a>
-                <a href="" class="text-gray-700 hover:text-black py-2 border-b border-gray-100">Excerpts</a>
-                <a href="" class="text-gray-700 hover:text-black py-2 border-b border-gray-100">About</a>
-                <a href="" class="bg-black px-4 py-2 rounded-full text-white text-center mt-4">Newsletter</a>
-            </nav>
-        </div>
-    </div>
-
-    <script>
-        const menuBtn = document.getElementById('menuBtn');
-        const closeBtn = document.getElementById('closeBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuPanel = document.getElementById('menuPanel');
-
-        function openMenu() {
-            mobileMenu.classList.remove('hidden');
-            setTimeout(() => {
-                menuPanel.classList.remove('translate-x-full');
-            }, 10);
-        }
-
-        function closeMenu() {
-            menuPanel.classList.add('translate-x-full');
-            setTimeout(() => {
-                mobileMenu.classList.add('hidden');
-            }, 300);
-        }
-
-        menuBtn.addEventListener('click', openMenu);
-        closeBtn.addEventListener('click', closeMenu);
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target === mobileMenu) {
-                closeMenu();
-            }
-        });
-    </script>
+    <Header client:load />
     <slot />
 </body>
 </html>
