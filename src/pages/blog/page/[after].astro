@@ -2,6 +2,7 @@
 import type { GetPostsQuery } from "../../../graphql/generated";
 import query from "../../../get-posts.graphql?raw";
 import { graphqlFetch } from "../../../lib/graphqlFetch";
+import MainLayout from "../../../layouts/MainLayout.astro";
 
 const {after} = Astro.params;
 
@@ -18,13 +19,7 @@ const hasNext = data.posts?.pageInfo.hasNextPage ?? false;
 
 const nextPageUrl = hasNext ? `/blog/page/${nextCursor}` : null;
 ---
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Paginated Posts</title>
-  </head>
-  <body>
+<MainLayout title="Blog">
     <h1>Posts</h1>
 
     <ul>
@@ -40,5 +35,4 @@ const nextPageUrl = hasNext ? `/blog/page/${nextCursor}` : null;
         <button>Next Page</button>
       </a>
     )}
-  </body>
-</html>
+</MainLayout>
