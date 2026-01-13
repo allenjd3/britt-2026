@@ -5,7 +5,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="flex justify-between h-16 items-center px-4 border-b border-gray-200">
+      <header className="sticky z-10 bg-white isolate top-0 flex justify-between h-16 items-center px-4 border-b border-gray-200">
         <h2 className="font-serif text-2xl">Britt Lee Allen</h2>
 
         {/* Desktop Navigation */}
