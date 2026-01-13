@@ -10276,7 +10276,8 @@ export type WritingSettings = {
 export type GetPostsQueryVariables = Exact<{
   first?: Scalars['Int']['input'];
   after?: InputMaybe<Scalars['String']['input']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetPostsQuery = { __typename?: 'RootQuery', posts?: { __typename?: 'RootQueryToPostConnection', nodes: Array<{ __typename?: 'Post', id: string, title?: string | null, uri?: string | null, excerpt?: string | null }>, pageInfo: { __typename?: 'RootQueryToPostConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null } } | null };
+export type GetPostsQuery = { __typename?: 'RootQuery', posts?: { __typename?: 'RootQueryToPostConnection', nodes: Array<{ __typename?: 'Post', id: string, title?: string | null, uri?: string | null, excerpt?: string | null, date?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, mediaDetails?: { __typename?: 'MediaDetails', sizes?: Array<{ __typename?: 'MediaSize', sourceUrl?: string | null, name?: string | null } | null> | null } | null } } | null }>, pageInfo: { __typename?: 'RootQueryToPostConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null } } | null };
