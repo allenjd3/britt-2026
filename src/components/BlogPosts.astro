@@ -1,0 +1,47 @@
+---
+import {formatLongDate} from "../lib/formatDate";
+import type { GetPostsQuery } from "../graphql/generated";
+type Post =
+  NonNullable<
+    NonNullable<GetPostsQuery['posts']>['nodes'][number]
+  >
+
+type PageInfo =
+  NonNullable<
+    NonNullable<GetPostsQuery['posts']>['pageInfo']
+  >
+
+interface Props {
+    posts: Post[]
+    pageInfo: PageInfo
+}
+
+const {posts, pageInfo} = Astro.props
+const nextCursor = pageInfo.endCursor;
+const hasNext = pageInfo.hasNextPage ?? false;
+
+const nextPageUrl = hasNext ? `/blog/page/${nextCursor}` : null;
+---
+
+<section class="wrapper">
+{posts.map((post) => {
+    const imageUrl = post.featuredImage?.node.mediaDetails?.sizes?.filter((size) => size?.name == 'large')[0]?.sourceUrl;
+    const altText = post.featuredImage?.node.altText;
+    const date = post.date ? formatLongDate(post.date) : ''
+    return <article class="grid grid-cols-[300px_1fr] gap-8 mb-8">
+    <img src={imageUrl} alt={altText} />
+    <div>
+        <h3 class="text-2xl">{post.title}</h3>
+        <p>{date}</p>
+        <div set:html={post.excerpt} />
+    </div>
+    </article>
+}
+)}
+</section>
+
+{nextPageUrl && (
+    <a href={nextPageUrl}>
+    <button>Next Page</button>
+    </a>
+)}
